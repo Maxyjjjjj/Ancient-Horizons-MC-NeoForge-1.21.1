@@ -1,5 +1,10 @@
 package com.execcexrrvycvtvtv.ancient_horizons;
 
+import com.execcexrrvycvtvtv.ancient_horizons.entity.client.tiger.TigerRenderer;
+import com.execcexrrvycvtvtv.ancient_horizons.registry.ModCreativeModeTabs;
+import com.execcexrrvycvtvtv.ancient_horizons.registry.ModEntities;
+import com.execcexrrvycvtvtv.ancient_horizons.registry.ModItems;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,6 +26,9 @@ public class AncientHorizons {
         modEventBus.addListener(this::commonSetup);
         NeoForge.EVENT_BUS.register(this);
 
+        ModCreativeModeTabs.register(modEventBus);
+        ModItems.register(modEventBus);
+        ModEntities.register(modEventBus);
         modEventBus.addListener(this::addCreative);
     }
 
@@ -28,17 +36,16 @@ public class AncientHorizons {
 
     }
 
-
     private void addCreative(BuildCreativeModeTabContentsEvent event) {}
-
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {}
 
-    @EventBusSubscriber(modid = AncientHorizons.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = AncientHorizons.MOD_ID, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
+        static void onClientSetup(FMLClientSetupEvent event) {
+            EntityRenderers.register(ModEntities.TIGER.get(), TigerRenderer::new);
         }
     }
 }

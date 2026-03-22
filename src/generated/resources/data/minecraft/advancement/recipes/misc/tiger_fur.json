@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:tiger_fur"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tiger_hair": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ancient_horizons:tiger_hair"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tiger_hair"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:tiger_fur"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "com.execcexrrvycvtvtv.ancient_horizons.mixins",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [
+        "CreeperMixin"
+    ],
+    "client": [],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

@@ -9,6 +9,9 @@ version="0.0.1"
 displayName="Ancient Horizons"
 description='''Example mod'''
 
+[[mixins]]
+config="ancient_horizons.mixins.json"
+
 [[dependencies.ancient_horizons]]
 modId="neoforge"
 type="required"

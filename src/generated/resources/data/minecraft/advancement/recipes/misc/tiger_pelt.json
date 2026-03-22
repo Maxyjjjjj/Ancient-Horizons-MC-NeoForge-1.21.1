@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:tiger_pelt"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tiger_fur": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ancient_horizons:tiger_fur"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tiger_fur"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:tiger_pelt"
+    ]
+  }
+}
