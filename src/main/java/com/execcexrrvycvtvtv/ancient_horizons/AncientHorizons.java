@@ -4,6 +4,7 @@ import com.execcexrrvycvtvtv.ancient_horizons.entity.client.tiger.TigerRenderer;
 import com.execcexrrvycvtvtv.ancient_horizons.registry.ModCreativeModeTabs;
 import com.execcexrrvycvtvtv.ancient_horizons.registry.ModEntities;
 import com.execcexrrvycvtvtv.ancient_horizons.registry.ModItems;
+import com.execcexrrvycvtvtv.ancient_horizons.registry.ModSoundEvents;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -29,6 +30,7 @@ public class AncientHorizons {
         ModCreativeModeTabs.register(modEventBus);
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);
+        ModSoundEvents.EVENTS.register(modEventBus);
         modEventBus.addListener(this::addCreative);
     }
 

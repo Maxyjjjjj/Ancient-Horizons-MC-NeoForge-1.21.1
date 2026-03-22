@@ -1,10 +1,17 @@
 {
-    "creativetab.ancienthorizons.ancient_horizons_spawn_eggs": "Стародавні горизонти: Яйця виклику",
+    "creativetab.ancient_horizons.ancient_horizons_spawn_eggs": "Стародавні горизонти: Яйця виклику",
 
-    "item.ancienthorizons.tiger_spawn_egg": "Яйце виклику тигра",
-    "entity.ancienthorizons.tiger": "Тигр",
+    "item.ancient_horizons.tiger_spawn_egg": "Яйце виклику тигра",
+    "entity.ancient_horizons.tiger": "Тигр",
 
-    "item.ancienthorizons.tiger_hair": "Тигрова волосина",
-    "item.ancienthorizons.tiger_fur": "Тигрове хутро",
-    "item.ancienthorizons.tiger_pelt": "Тигрова шкура"
+    "item.ancient_horizons.tiger_hair": "Тигрова волосина",
+    "item.ancient_horizons.tiger_fur": "Тигрове хутро",
+    "item.ancient_horizons.tiger_pelt": "Тигрова шкура",
+
+    "subtitles.ancient_horizons.tiger.idle": "Тигр гарчить",
+    "subtitles.ancient_horizons.tiger.hurt": "Тигра поранено",
+    "subtitles.ancient_horizons.tiger.death": "Тигр гине",
+    "subtitles.ancient_horizons.tiger.angry": "Тигр ричить",
+    "subtitles.ancient_horizons.tiger.chuffle": "Тигр пихтить",
+    "subtitles.ancient_horizons.tiger.sleep": "Тигр хропить"
 }

@@ -11,8 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
-
 @Mixin(Creeper.class)
 public abstract class CreeperMixin extends Monster {
 
@@ -21,12 +19,10 @@ public abstract class CreeperMixin extends Monster {
         super(type, level);
     }
 
-    @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
-    private void ignoreFelidTargets(@Nullable LivingEntity target, CallbackInfo ci) {
-        if (target != null
-                && target.getType().is(ModTags.EntityTypes.FELIDAE)
-                && (target.getType() == EntityType.CAT || target.getType() == EntityType.OCELOT)) {
-            ci.cancel();
+    @Inject(method = "setTarget", at = @At("TAIL"))
+    private void ignoreFelidTargets(LivingEntity target, CallbackInfo ci) {
+        if (!target.getType().is(ModTags.EntityTypes.FELIDAE)) {
+            super.setTarget(target);
         }
     }
 
@@ -37,10 +33,10 @@ public abstract class CreeperMixin extends Monster {
         self.goalSelector.addGoal(3, new AvoidEntityGoal<>(
                 self,
                 LivingEntity.class,
-                6.0F,
+                8.0F,
                 1.0D,
                 1.2D,
-                entity -> entity.getType().is(ModTags.EntityTypes.FELIDAE) && (entity.getType() != EntityType.CAT || entity.getType() != EntityType.OCELOT)
+                entity -> entity.getType().is(ModTags.EntityTypes.FELIDAE) && entity.getType() != EntityType.CAT && entity.getType() != EntityType.OCELOT
         ));
     }
 }

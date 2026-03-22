@@ -3,8 +3,8 @@ package com.execcexrrvycvtvtv.ancient_horizons.entity.custom.mob;
 import com.execcexrrvycvtvtv.ancient_horizons.registry.ModEntities;
 import com.execcexrrvycvtvtv.ancient_horizons.entity.variants.TigerVariant;
 import com.execcexrrvycvtvtv.ancient_horizons.registry.ModItems;
+import com.execcexrrvycvtvtv.ancient_horizons.registry.ModSoundEvents;
 import com.execcexrrvycvtvtv.ancient_horizons.registry.ModTags;
-import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -12,6 +12,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -26,19 +27,22 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -46,6 +50,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
@@ -173,14 +178,17 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
         }
 
         if (this.level().isClientSide) {
-
             if (this.isDancing()) {
-                ++this.dancingAnimationTicks;
-
+                this.dancingAnimationTicks++;
             } else {
                 this.dancingAnimationTicks = 0.0F;
             }
         }
+    }
+
+    @Override
+    public void setRecordPlayingNearby(BlockPos pos, boolean isPlaying) {
+        this.setJukeboxPlaying(pos, isPlaying);
     }
 
     @Override
@@ -197,7 +205,6 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
         if (!this.level().isClientSide && this.isEffectiveAi() && (!dancing || !this.isPanicking())) {
             this.entityData.set(IS_DANCING, dancing);
         }
-
     }
 
     private boolean shouldStopDancing() {
@@ -248,14 +255,7 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
 
         if (isFood(item) && !isTame()) {
             if (!player.getAbilities().instabuild) item.shrink(1);
-            if (this.random.nextInt(3) == 0) {
-                this.tame(player);
-                this.navigation.stop();
-                this.setTarget(null);
-                this.level().broadcastEntityEvent(this, (byte) 7);
-            } else {
-                this.level().broadcastEntityEvent(this, (byte) 6);
-            }
+            tryToTame(player);
             return InteractionResult.SUCCESS;
         }
 
@@ -274,7 +274,7 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
         }
 
         if (isTame() && isOwnedBy(player) && !player.isSecondaryUseActive()
-                && !isFood(item) && !(item.getItem() instanceof DyeItem)) {
+                && !isFood(item) && !(item.getItem() instanceof DyeItem) && !(item.canPerformAction(ItemAbilities.BRUSH_BRUSH) && this.brushOffHair())) {
             if (!level().isClientSide) {
                 setOrderedToSit(!isOrderedToSit());
                 this.jumping = false;
@@ -636,11 +636,7 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
                     .withParameter(LootContextParams.THIS_ENTITY, tiger)
                     .create(LootContextParamSets.GIFT);
 
-            @SuppressWarnings("unchecked")
-            ObjectListIterator<ItemStack> it = (ObjectListIterator<ItemStack>)
-                    table.getRandomItems(params).iterator();
-            while (it.hasNext()) {
-                ItemStack stack = it.next();
+            for (ItemStack stack : table.getRandomItems(params)) {
                 tiger.level().addFreshEntity(new ItemEntity(
                         tiger.level(),
                         pos.getX() - Mth.sin(tiger.yBodyRot * (float) (Math.PI / 180.0)),
@@ -684,6 +680,97 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
             if (mob instanceof TigerEntity && !mob.isBaby()) {
                 super.alertOther(mob, target);
             }
+        }
+    }
+
+    public boolean wantsToAttack(LivingEntity target, LivingEntity owner) {
+        if (!(target instanceof Ghast) && !(target instanceof ArmorStand)) {
+            if (!(target instanceof TigerEntity tiger)) {
+                if (target instanceof Player player) {
+                    if (owner instanceof Player player1) {
+                        if (!player1.canHarmPlayer(player)) {
+                            return false;
+                        }
+                    }
+                }
+
+                if (target instanceof AbstractHorse abstracthorse) {
+                    if (abstracthorse.isTamed()) {
+                        return false;
+                    }
+                }
+
+                if (target instanceof TamableAnimal tamableanimal) {
+                    return !tamableanimal.isTame();
+                }
+
+                return true;
+            } else {
+                return !tiger.isTame() || tiger.getOwner() != owner;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 240;
+    }
+
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        if (isAggressive()) {
+            return ModSoundEvents.TIGER_ANGRY.get();
+        } else if (isSleeping()) {
+            return ModSoundEvents.TIGER_SLEEP.get();
+        } else if (isInLove()) {
+            return ModSoundEvents.TIGER_CHUFFLE.get();
+        } else return ModSoundEvents.TIGER_AMBIENT.get();
+    }
+
+    @Override
+    protected @Nullable SoundEvent getHurtSound(DamageSource damageSource) {
+        return ModSoundEvents.TIGER_HURT.get();
+    }
+
+    @Override
+    protected @Nullable SoundEvent getDeathSound() {
+        return ModSoundEvents.TIGER_DEATH.get();
+    }
+
+    @Override
+    public SoundEvent getEatingSound(ItemStack stack) {
+        return SoundEvents.CAT_EAT;
+    }
+
+    private void tryToTame(Player player) {
+        if (this.random.nextInt(8) == 0 && !EventHooks.onAnimalTame(this, player)) {
+            this.tame(player);
+            this.navigation.stop();
+            this.setTarget(null);
+            this.setOrderedToSit(true);
+            this.level().broadcastEntityEvent(this, (byte)7);
+        } else {
+            this.level().broadcastEntityEvent(this, (byte)6);
+        }
+
+    }
+
+    public boolean canMate(Animal otherAnimal) {
+        if (otherAnimal == this) {
+            return false;
+        } else if (!this.isTame()) {
+            return false;
+        } else if (otherAnimal instanceof TigerEntity) {
+            TigerEntity tiger = (TigerEntity) otherAnimal;
+            if (!tiger.isTame()) {
+                return false;
+            } else {
+                return !tiger.isInSittingPose() && this.isInLove() && tiger.isInLove();
+            }
+        } else {
+            return false;
         }
     }
 }

@@ -15,7 +15,7 @@ public class ModCreativeModeTabs {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, AncientHorizons.MOD_ID);
     public static final Supplier<CreativeModeTab> ANCIENT_HORIZONS_TAB_SPAWN_EGGS = CREATIVE_MODE_TAB.register("ancient_horizons_tab_spawn_eggs",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.TIGER_SPAWN_EGG.get()))
-                    .title(Component.translatable("creativetab.ancienthorizons.ancient_horizons_spawn_eggs"))
+                    .title(Component.translatable("creativetab.ancient_horizons.ancient_horizons_spawn_eggs"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.TIGER_SPAWN_EGG);
                     }).build());

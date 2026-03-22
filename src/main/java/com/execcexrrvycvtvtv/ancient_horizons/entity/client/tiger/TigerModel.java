@@ -3,8 +3,6 @@ package com.execcexrrvycvtvtv.ancient_horizons.entity.client.tiger;
 import com.execcexrrvycvtvtv.ancient_horizons.AncientHorizons;
 import com.execcexrrvycvtvtv.ancient_horizons.entity.custom.mob.TigerEntity;
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -39,11 +37,11 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
     private static final float DEFAULT_TAIL_X = -1.0036F;
 
     public TigerModel(ModelPart root) {
-        super(true, 3.0F, 3.0F, 1.4F, 0.5F, 0.0F);
+        super(true, 16.0F, 3.35F, 2.0F, 2.0F, 24.0F);
         this.body = root.getChild("body");
         this.belly = this.body.getChild("belly");
         this.angerfur = this.belly.getChild("angerfur");
-        this.head = this.body.getChild("head");
+        this.head = root.getChild("head");
         this.muzzle = this.head.getChild("muzzle");
         this.jaw = this.head.getChild("jaw");
         this.tongue = this.jaw.getChild("tongue");
@@ -76,8 +74,8 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
                 .texOffs(20, 82).addBox(-5.5F, -2.0F, -15.0F, 10.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
                 .texOffs(36, 59).addBox(-4.5F, -1.0F, -13.0F, 8.0F, 1.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -4.0F, 3.0F));
 
-        PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(52, 53).addBox(-6.0F, -5.0F, -7.0F, 12.0F, 9.0F, 7.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 58).addBox(-9.0F, -2.0F, -3.0F, 18.0F, 8.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -3.0F, -7.0F));
+        PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(52, 53).addBox(-6.0F, -5.0F, -7.0F, 12.0F, 9.0F, 7.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 58).addBox(-9.0F, -2.0F, -3.0F, 18.0F, 8.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 5.0F, -7.0F));
 
         PartDefinition muzzle = head.addOrReplaceChild("muzzle", CubeListBuilder.create().texOffs(40, 69).addBox(-3.5F, 0.0F, -5.0F, 6.0F, 3.0F, 5.0F, new CubeDeformation(0.0F))
                 .texOffs(60, 77).addBox(-3.0F, 3.0F, -4.75F, 5.0F, 2.0F, 5.0F, new CubeDeformation(0.05F)), PartPose.offset(0.5F, -2.0F, -7.0F));
@@ -119,7 +117,7 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount,
+    public void setupAnim(TigerEntity entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float netHeadYaw, float headPitch) {
 
         resetPose();
@@ -132,15 +130,102 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
         eyesclosed.visible = isSleeping;
 
         if (isSleeping) {
-            animSleep(ageInTicks);
+            this.body.y = 22.0F;
+            this.head.y = 2.0F;
+            this.head.z = -4.0F;
+            this.head.xRot = 0.15F;
+
+            float breathing = (float)Math.sin(ageInTicks * 0.1F) * 0.05F;
+            this.belly.y = 0.0F + breathing;
+
+            float sleepLegRot = -1.5708F;
+            this.pawleftfront.xRot = sleepLegRot;
+            this.pawrightfront.xRot = sleepLegRot;
+            this.pawleftback.xRot = sleepLegRot;
+            this.pawrightback.xRot = sleepLegRot;
+
+            this.tail.xRot = 0.2F;
+            this.tail.yRot = (float)Math.sin(ageInTicks * 0.05F) * 0.1F;
         } else if (entity.isAttacking()) {
             animAttack(ageInTicks);
         } else if (entity.isTearing()) {
-            animTear(ageInTicks);
+            this.head.y = -8.0F;
+            this.belly.xRot = 0.262F;
+
+            this.head.zRot = (float)Math.sin(ageInTicks * 2.0F) * 0.698F;
+
+            this.pawleftfront.xRot = -0.785F;
+            this.pawleftfront.y = -3.0F;
+            this.pawrightfront.xRot = -0.785F;
+            this.pawrightfront.y = -3.0F;
+
+            this.clawsleftfront.xRot = -1.5708F;
+            this.clawsleftfront.y = -1.0F;
+            this.clawsleftback.xRot = -1.5708F;
+            this.clawsleftback.y = -1.0F;
+            this.clawsrightfront.xRot = -1.5708F;
+            this.clawsrightfront.y = -1.0F;
+            this.clawsrightback.xRot = -1.5708F;
+            this.clawsrightback.y = -1.0F;
+        } else if (entity.isInSittingPose()) {
+            this.body.y = 12.0F;
+            this.body.xRot = -0.7854F;
+
+            this.pawleftfront.xRot = 0.7854F;
+            this.pawrightfront.xRot = 0.7854F;
+
+            this.pawleftback.xRot = 1.5708F;
+            this.pawrightback.xRot = 1.5708F;
+            this.pawleftback.y = 2.0F;
+            this.pawrightback.y = 2.0F;
+
+            this.head.y = 2.0F;
         } else if (entity.isPouncing()) {
-            animPounce(ageInTicks);
-        } else if (isAngry) {
-            animAngry(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            this.body.xRot = -0.349F;
+            this.belly.xRot = 0.131F;
+            this.head.xRot = 0.305F;
+            this.head.y = -3.0F;
+
+            this.jaw.xRot = 0.611F;
+            this.tail.xRot = 1.527F;
+
+            this.pawleftfront.xRot = -0.96F;
+            this.pawleftfront.zRot = -1.047F;
+            this.pawrightfront.xRot = -0.96F;
+            this.pawrightfront.zRot = 1.047F;
+
+            this.pawrightback.xRot = 1.396F;
+            this.pawrightback.y = 3.0F;
+            this.pawleftback.xRot = 1.396F;
+            this.pawleftback.y = 3.0F;
+        } else if (entity.isAngry()) {
+            this.angerfur.y = 2.0F;
+            this.head.y = -3.0F;
+            this.eyesangry.y = 0.1F;
+            this.eyesangry.z = -1.0F;
+
+            this.earleft.xRot = 0.0F;
+            this.earleft.yRot = -1.5708F;
+            this.earleft.zRot = 1.5708F;
+            this.earleft.setPos(1.5F, -2.0F, 0.0F);
+
+            this.earleft2.yRot = 1.5708F;
+            this.earleft2.zRot = -1.5708F;
+            this.earleft2.setPos(-1.5F, -2.0F, 0.0F);
+
+            float clawRot = -1.5708F;
+            this.clawsleftfront.xRot = clawRot;
+            this.clawsrightfront.xRot = clawRot;
+            this.clawsrightback.xRot = clawRot;
+            this.clawsleftback.xRot = clawRot;
+            this.clawsleftfront.y = 1.0F;
+            this.clawsrightfront.y = 1.0F;
+            this.clawsrightback.y = 1.0F;
+            this.clawsleftback.y = 1.0F;
+
+            float vibrate = (float)Math.sin(ageInTicks * 1.5F) * 0.1F;
+            this.muzzle.y = 0.05F + vibrate;
+            this.jaw.y = -1.15F + vibrate;
         } else if (entity.isDancing()) {
             animDance(ageInTicks);
         } else if (entity.isYawning()) {
@@ -165,35 +250,28 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
         body.xRot = 0F; body.yRot = 0F; body.zRot = 0F;
         body.x = 0F;    body.y = 8F;    body.z = 0F;
 
-        belly.xRot = 0F; belly.yRot = 0F; belly.zRot = 0F;
-
-        angerfur.xRot = 0F; angerfur.yRot = 0F; angerfur.zRot = 0F;
-        angerfur.visible = false;
-
         head.xRot = 0F; head.yRot = 0F; head.zRot = 0F;
-        head.y = -3F; head.z = -7F;
+        head.x = 0F;    head.y = 5F;    head.z = -7F;
 
-        jaw.xRot  = 0F;
-        tongue.visible = false;
+        ModelPart[] legs = {pawleftfront, pawrightfront, pawleftback, pawrightback};
+        for (ModelPart leg : legs) {
+            leg.xRot = 0F;
+            leg.yRot = 0F;
+            leg.zRot = 0F;
+            leg.y = 5.0F;
+        }
 
-        earleft.zRot  = 0F;
-        earleft2.zRot = 0F;
+        clawsleftfront.xRot = 0F; clawsleftfront.y = 1F;
+        clawsrightfront.xRot = 0F; clawsrightfront.y = 1F;
+        clawsleftback.xRot = 0F; clawsleftback.y = 1F;
+        clawsrightback.xRot = 0F; clawsrightback.y = 1F;
 
-        eyesangry.visible  = false;
-        eyesclosed.visible = false;
-
-        clawsleftfront.xRot  = 0F;
-        clawsrightfront.xRot = 0F;
-        clawsleftback.xRot   = 0F;
-        clawsrightback.xRot  = 0F;
-
-        pawleftfront.xRot  = 0F; pawleftfront.yRot  = 0F;
-        pawrightfront.xRot = 0F; pawrightfront.yRot = 0F;
-        pawleftback.xRot   = 0F; pawleftback.yRot   = 0F;
-        pawrightback.xRot  = 0F; pawrightback.yRot  = 0F;
-
+        belly.xRot = 0F;
+        belly.y = 0F;
+        jaw.xRot = 0F;
+        jaw.y = 1.0F;
         tail.xRot = DEFAULT_TAIL_X;
-        tail.yRot = 0F; tail.zRot = 0F;
+        tail.yRot = 0F;
     }
 
     private void animWalk(float limbSwing, float limbSwingAmount,
@@ -233,50 +311,6 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
         tail.yRot = Mth.cos(ageInTicks * 0.2F) * 0.15F;
     }
 
-    private void animAngry(float limbSwing, float limbSwingAmount,
-                           float ageInTicks, float netHeadYaw, float headPitch) {
-
-        animWalk(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-
-        head.xRot += 0.35F;
-        head.y    += 1.5F;
-
-        angerfur.visible = true;
-        angerfur.y    = -2F;
-
-        earleft.zRot  =  0.35F;
-        earleft2.zRot = -0.35F;
-
-        extendClaws(0.25F);
-
-        jaw.xRot = 0.15F + Mth.cos(ageInTicks * 0.1F) * 0.05F;
-
-        tail.yRot = Mth.cos(ageInTicks * 0.35F) * 0.6F;
-        tail.xRot = DEFAULT_TAIL_X + 0.15F;
-    }
-
-    private void animSleep(float ageInTicks) {
-        float breathe = Mth.cos(ageInTicks * 0.04F) * 0.03F;
-
-        body.zRot = Mth.HALF_PI - 0.3F;
-        body.y    = 11F;
-        body.xRot = breathe;
-
-        head.xRot = Mth.HALF_PI * 0.5F;
-        head.yRot = 0.3F;
-        head.y    = -3F + 2F;
-
-        jaw.xRot = 0.1F;
-
-        pawleftfront.xRot   = -Mth.HALF_PI * 0.6F;
-        pawrightfront.xRot  = -Mth.HALF_PI * 0.6F;
-        pawleftback.xRot    =  Mth.HALF_PI * 0.5F;
-        pawrightback.xRot   =  Mth.HALF_PI * 0.5F;
-
-        tail.xRot = DEFAULT_TAIL_X + 1.2F;
-        tail.yRot = 0.6F;
-    }
-
     private void animAttack(float ageInTicks) {
         float swipeProgress = Mth.sin(ageInTicks * 0.5F);
 
@@ -292,7 +326,6 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
 
         head.xRot = 0.3F + Mth.abs(swipeProgress) * 0.2F;
 
-        extendClaws(0.6F);
         angerfur.visible = true;
         angerfur.y = -2F;
 
@@ -300,6 +333,7 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
         body.y    = 8F + 0.8F;
 
         eyesangry.visible = true;
+        eyesangry.z = 1f;
     }
 
     private void animSneak(float limbSwing, float limbSwingAmount,
@@ -337,7 +371,6 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
         pawleftback.xRot  = 0.2F;
         pawrightback.xRot = 0.2F;
 
-        extendClaws(0.6F);
         angerfur.visible = true;
         angerfur.xRot    = -0.5F;
         eyesangry.visible = true;
@@ -361,29 +394,6 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
         tail.xRot = DEFAULT_TAIL_X - 0.5F;
 
         head.xRot = -0.2F;
-    }
-
-    private void animPounce(float ageInTicks) {
-        pawleftfront.xRot  = -1.2F;
-        pawleftfront.yRot  =  0.3F;
-        pawrightfront.xRot = -1.2F;
-        pawrightfront.yRot = -0.3F;
-
-        float kick = Mth.sin(ageInTicks * 0.5F) * 0.4F;
-        pawleftback.xRot  = 0.9F + kick;
-        pawrightback.xRot = 0.9F + kick;
-
-        body.xRot = -0.3F;
-
-        extendClaws(0.7F);
-        angerfur.visible  = true;
-        angerfur.xRot     = -0.5F;
-        eyesangry.visible = true;
-
-        jaw.xRot = 0.2F;
-
-        tail.xRot = DEFAULT_TAIL_X - 0.6F;
-        tail.yRot = 0F;
     }
 
     private void animYawn(float ageInTicks) {
@@ -426,25 +436,13 @@ public class TigerModel<T extends TigerEntity> extends AgeableListModel<T> {
         tail.xRot = DEFAULT_TAIL_X - 0.3F;
     }
 
-    private void extendClaws(float amount) {
-        clawsleftfront.xRot  = amount;
-        clawsrightfront.xRot = amount;
-        clawsleftback.xRot   = amount;
-        clawsrightback.xRot  = amount;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-        body.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-    }
-
     @Override
     protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of(head, eyesangry, earleft, earleft2, eyesclosed, muzzle, jaw, tongue);
+        return ImmutableList.of(head);
     }
 
     @Override
     protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(belly, angerfur, pawleftback, pawleftfront, pawrightback, pawrightfront, clawsleftback, clawsleftfront, clawsrightback, clawsrightfront, tail);
+        return ImmutableList.of(body);
     }
 }

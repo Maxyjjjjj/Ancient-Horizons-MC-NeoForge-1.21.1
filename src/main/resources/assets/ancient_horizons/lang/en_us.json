@@ -1,10 +1,17 @@
 {
-    "creativetab.ancienthorizons.ancient_horizons_spawn_eggs": "Ancient Horizons: Spawn Eggs",
+    "creativetab.ancient_horizons.ancient_horizons_spawn_eggs": "Ancient Horizons: Spawn Eggs",
 
-    "item.ancienthorizons.tiger_spawn_egg": "Tiger Spawn Egg",
-    "entity.ancienthorizons.tiger": "Tiger",
+    "item.ancient_horizons.tiger_spawn_egg": "Tiger Spawn Egg",
+    "entity.ancient_horizons.tiger": "Tiger",
 
-    "item.ancienthorizons.tiger_hair": "Tiger Hair",
-    "item.ancienthorizons.tiger_fur": "Tiger Fur",
-    "item.ancienthorizons.tiger_pelt": "Tiger Pelt"
+    "item.ancient_horizons.tiger_hair": "Tiger Hair",
+    "item.ancient_horizons.tiger_fur": "Tiger Fur",
+    "item.ancient_horizons.tiger_pelt": "Tiger Pelt",
+
+    "subtitles.ancient_horizons.tiger.idle": "Tiger growls",
+    "subtitles.ancient_horizons.tiger.hurt": "Tiger hurts",
+    "subtitles.ancient_horizons.tiger.death": "Tiger dies",
+    "subtitles.ancient_horizons.tiger.angry": "Tiger roars",
+    "subtitles.ancient_horizons.tiger.chuffle": "Tiger chuffles",
+    "subtitles.ancient_horizons.tiger.sleep": "Tiger snoozes"
 }

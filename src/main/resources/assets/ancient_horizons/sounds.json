@@ -1,0 +1,49 @@
+{
+    "entity.tiger.idle": {
+        "sounds": [
+            "ancient_horizons:entity/tiger/tiger_idle_0",
+            "ancient_horizons:entity/tiger/tiger_idle_1",
+            "ancient_horizons:entity/tiger/tiger_idle_2",
+            "ancient_horizons:entity/tiger/tiger_idle_3"
+        ],
+        "subtitle": "subtitles.ancient_horizons.tiger.idle"
+    },
+    "entity.tiger.hurt": {
+        "sounds": [
+            "ancient_horizons:entity/tiger/tiger_hurt_0",
+            "ancient_horizons:entity/tiger/tiger_hurt_1",
+            "ancient_horizons:entity/tiger/tiger_hurt_2"
+        ],
+        "subtitle": "subtitles.ancient_horizons.tiger.hurt"
+    },
+    "entity.tiger.death": {
+        "sounds": [
+            "ancient_horizons:entity/tiger/tiger_hurt_0",
+            "ancient_horizons:entity/tiger/tiger_hurt_1",
+            "ancient_horizons:entity/tiger/tiger_hurt_2"
+        ],
+        "subtitle": "subtitles.ancient_horizons.tiger.death"
+    },
+    "entity.tiger.angry": {
+        "sounds": [
+            "ancient_horizons:entity/tiger/tiger_angry_0",
+            "ancient_horizons:entity/tiger/tiger_angry_1",
+            "ancient_horizons:entity/tiger/tiger_angry_2"
+        ],
+        "subtitle": "subtitles.ancient_horizons.tiger.angry"
+    },
+    "entity.tiger.chuffle": {
+        "sounds": [
+            "ancient_horizons:entity/tiger/tiger_chuffle"
+        ],
+        "subtitle": "subtitles.ancient_horizons.tiger.chuffle"
+    },
+    "entity.tiger.sleep": {
+        "sounds": [
+            "ancient_horizons:entity/tiger/tiger_sleep_0",
+            "ancient_horizons:entity/tiger/tiger_sleep_1",
+            "ancient_horizons:entity/tiger/tiger_sleep_2"
+        ],
+        "subtitle": "subtitles.ancient_horizons.tiger.sleep"
+    }
+}

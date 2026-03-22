@@ -5,7 +5,6 @@ import com.execcexrrvycvtvtv.ancient_horizons.entity.custom.mob.TigerEntity;
 import com.execcexrrvycvtvtv.ancient_horizons.entity.variants.TigerVariant;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;
