@@ -1,17 +1,40 @@
 {
     "creativetab.ancient_horizons.ancient_horizons_spawn_eggs": "Ancient Horizons: Spawn Eggs",
+    "creativetab.ancient_horizons.ancient_horizons_misc": "Ancient Horizons: Miscellaneous",
+    "creativetab.ancient_horizons.ancient_horizons_blocks_and_items": "Ancient Horizons: Items and Blocks",
+    "creativetab.ancient_horizons.ancient_horizons_foodstuffs": "Ancient Horizons: Foodstuffs",
 
     "item.ancient_horizons.tiger_spawn_egg": "Tiger Spawn Egg",
     "entity.ancient_horizons.tiger": "Tiger",
-
-    "item.ancient_horizons.tiger_hair": "Tiger Hair",
-    "item.ancient_horizons.tiger_fur": "Tiger Fur",
-    "item.ancient_horizons.tiger_pelt": "Tiger Pelt",
 
     "subtitles.ancient_horizons.tiger.idle": "Tiger growls",
     "subtitles.ancient_horizons.tiger.hurt": "Tiger hurts",
     "subtitles.ancient_horizons.tiger.death": "Tiger dies",
     "subtitles.ancient_horizons.tiger.angry": "Tiger roars",
     "subtitles.ancient_horizons.tiger.chuffle": "Tiger chuffles",
-    "subtitles.ancient_horizons.tiger.sleep": "Tiger snoozes"
+    "subtitles.ancient_horizons.tiger.sleep": "Tiger snoozes",
+
+    "item.ancient_horizons.golden_eagle_spawn_egg": "Golden Eagle Spawn Egg",
+    "entity.ancient_horizons.golden_eagle": "Golden Eagle",
+
+    "subtitles.ancient_horizons.golden_eagle.idle": "Golden Eagle calls",
+    "subtitles.ancient_horizons.golden_eagle.hurt": "Golden Eagle hurts",
+    "subtitles.ancient_horizons.golden_eagle.death": "Golden Eagle dies",
+
+    "item.ancient_horizons.deer_spawn_egg": "Deer Spawn Egg",
+    "entity.ancient_horizons.deer": "Deer",
+
+    "subtitles.ancient_horizons.deer.idle": "Deer roars",
+    "subtitles.ancient_horizons.deer.hurt": "Deer hurts",
+    "subtitles.ancient_horizons.deer.death": "Deer dies",
+
+    "item.ancient_horizons.tiger_hair": "Tiger Hair",
+    "item.ancient_horizons.tiger_fur": "Tiger Fur",
+    "item.ancient_horizons.tiger_pelt": "Tiger Pelt",
+    "item.ancient_horizons.falconry_glove": "Falconry Glove",
+    "item.ancient_horizons.venison": "Raw Venison",
+    "item.ancient_horizons.cooked_venison": "Cooked Venison",
+
+    "ancient_horizons.advancements.eye_of_the_taiga.title": "Eye of the Taiga",
+    "ancient_horizons.advancements.eye_of_the_taiga.description": "Tame tigers of all 4 natural colors"
 }

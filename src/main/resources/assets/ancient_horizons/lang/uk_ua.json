@@ -1,17 +1,40 @@
 {
     "creativetab.ancient_horizons.ancient_horizons_spawn_eggs": "Стародавні горизонти: Яйця виклику",
+    "creativetab.ancient_horizons.ancient_horizons_blocks_and_items": "Стародавні горизонти: Предмети та блоки",
+    "creativetab.ancient_horizons.ancient_horizons_misc": "Стародавні горизонти: Різне",
+    "creativetab.ancient_horizons.ancient_horizons_foodstuffs": "Стародавні горизонти: Їжа та напої",
 
     "item.ancient_horizons.tiger_spawn_egg": "Яйце виклику тигра",
     "entity.ancient_horizons.tiger": "Тигр",
-
-    "item.ancient_horizons.tiger_hair": "Тигрова волосина",
-    "item.ancient_horizons.tiger_fur": "Тигрове хутро",
-    "item.ancient_horizons.tiger_pelt": "Тигрова шкура",
 
     "subtitles.ancient_horizons.tiger.idle": "Тигр гарчить",
     "subtitles.ancient_horizons.tiger.hurt": "Тигра поранено",
     "subtitles.ancient_horizons.tiger.death": "Тигр гине",
     "subtitles.ancient_horizons.tiger.angry": "Тигр ричить",
     "subtitles.ancient_horizons.tiger.chuffle": "Тигр пихтить",
-    "subtitles.ancient_horizons.tiger.sleep": "Тигр хропить"
+    "subtitles.ancient_horizons.tiger.sleep": "Тигр хропить",
+
+    "item.ancient_horizons.golden_eagle_spawn_egg": "Яйце виклику беркута",
+    "entity.ancient_horizons.golden_eagle": "Беркут",
+
+    "subtitles.ancient_horizons.golden_eagle.idle": "Беркут кличе",
+    "subtitles.ancient_horizons.golden_eagle.hurt": "Беркута поранено",
+    "subtitles.ancient_horizons.golden_eagle.death": "Беркут гине",
+
+    "item.ancient_horizons.deer_spawn_egg": "Яйце виклику оленя",
+    "entity.ancient_horizons.deer": "Олень",
+
+    "subtitles.ancient_horizons.deer.idle": "Олень реве",
+    "subtitles.ancient_horizons.deer.hurt": "Оленя поранено",
+    "subtitles.ancient_horizons.deer.death": "Олень гине",
+
+    "item.ancient_horizons.tiger_hair": "Тигрова волосина",
+    "item.ancient_horizons.tiger_fur": "Тигрове хутро",
+    "item.ancient_horizons.tiger_pelt": "Тигрова шкура",
+    "item.ancient_horizons.falconry_glove": "Соколина рукавиця",
+    "item.ancient_horizons.venison": "Сира оленина",
+    "item.ancient_horizons.cooked_venison": "Смажена оленина",
+
+    "ancient_horizons.advancements.eye_of_the_taiga.title": "Іван Багряний про таке не писав...",
+    "ancient_horizons.advancements.eye_of_the_taiga.description": "Приручіть тигрів всіх 4 природних забарвлень"
 }

@@ -9,6 +9,7 @@
     "minecraft:pig",
     "minecraft:creeper",
     "minecraft:llama",
-    "minecraft:goat"
+    "minecraft:goat",
+    "ancient_horizons:deer"
   ]
 }

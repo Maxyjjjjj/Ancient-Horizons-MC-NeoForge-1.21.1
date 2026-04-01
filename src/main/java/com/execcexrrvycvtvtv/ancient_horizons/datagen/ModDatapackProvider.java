@@ -4,7 +4,6 @@ import com.execcexrrvycvtvtv.ancient_horizons.AncientHorizons;
 import com.execcexrrvycvtvtv.ancient_horizons.registry.ModBiomeModifiers;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;

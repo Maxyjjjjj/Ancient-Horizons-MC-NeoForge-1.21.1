@@ -1,0 +1,96 @@
+{
+  "parent": "minecraft:husbandry/tame_an_animal",
+  "criteria": {
+    "tame_blue": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "ancient_horizons:tiger",
+              "nbt": "{Variant:3}"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    },
+    "tame_regular": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "ancient_horizons:tiger",
+              "nbt": "{Variant:0}"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    },
+    "tame_tabby": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "ancient_horizons:tiger",
+              "nbt": "{Variant:2}"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    },
+    "tame_white": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "ancient_horizons:tiger",
+              "nbt": "{Variant:1}"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "ancient_horizons.advancements.eye_of_the_taiga.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:beef"
+    },
+    "title": {
+      "translate": "ancient_horizons.advancements.eye_of_the_taiga.title"
+    }
+  },
+  "requirements": [
+    [
+      "tame_regular"
+    ],
+    [
+      "tame_white"
+    ],
+    [
+      "tame_tabby"
+    ],
+    [
+      "tame_blue"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  },
+  "sends_telemetry_event": true
+}

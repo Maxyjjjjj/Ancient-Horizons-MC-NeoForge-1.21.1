@@ -28,7 +28,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -79,8 +78,7 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
             SynchedEntityData.defineId(TigerEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_JUMPING =
             SynchedEntityData.defineId(TigerEntity.class, EntityDataSerializers.BOOLEAN);
-
-    private static final EntityDataAccessor<Integer> COLLAR_COLOR =
+    private static final EntityDataAccessor<Integer> T_COLLAR_COLOR =
             SynchedEntityData.defineId(TigerEntity.class, EntityDataSerializers.INT);
 
     private int brushCooldown = 0;
@@ -123,7 +121,7 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
         builder.define(IS_DANCING, false);
         builder.define(IS_YAWNING, false);
         builder.define(IS_JUMPING, false);
-        builder.define(COLLAR_COLOR, DyeColor.RED.getId());
+        builder.define(T_COLLAR_COLOR, DyeColor.RED.getId());
     }
 
     @Override
@@ -133,20 +131,28 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
 
         this.goalSelector.addGoal(3, new TigerPounceGoal(this));
-        this.goalSelector.addGoal(4, new TigerMeleeGoal(this, 1.2D, true));
+        this.goalSelector.addGoal(4, new TigerMeleeGoal(this, 1.4D, true));
 
-        this.goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
-        this.goalSelector.addGoal(6, new TigerRelaxOnOwnerGoal(this));
+        this.goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.2D, 10.0F, 2.0F));
+        this.goalSelector.addGoal(6, new FollowParentGoal(this, 1.2D));
+        this.goalSelector.addGoal(7, new TigerRelaxOnOwnerGoal(this));
 
-        this.goalSelector.addGoal(7,  new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(8,  new RandomStrollGoal(this, 0.8D));
-        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(8,  new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(9,  new WaterAvoidingRandomStrollGoal(this, 0.8D));
+        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(11, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(1, new NonTameRandomTargetGoal<>(
                 this, LivingEntity.class, false,
-                entity -> entity.getType().is(ModTags.EntityTypes.TIGER_PREY)));
+                entity -> entity.getType().is(ModTags.EntityTypes.TIGER_PREY)){
+            final TigerEntity tiger = TigerEntity.this;
+
+            @Override
+            public boolean canUse() {
+                return !tiger.isBaby() && super.canUse();
+            }
+        });
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, new TigerHurtByTargetGoal());
         this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, false));
@@ -273,8 +279,7 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
 
-        if (isTame() && isOwnedBy(player) && !player.isSecondaryUseActive()
-                && !isFood(item) && !(item.getItem() instanceof DyeItem) && !(item.canPerformAction(ItemAbilities.BRUSH_BRUSH) && this.brushOffHair())) {
+        if (isTame() && isOwnedBy(player) && !isFood(item) && !(item.getItem() instanceof DyeItem) && !(item.canPerformAction(ItemAbilities.BRUSH_BRUSH) && this.brushOffHair())) {
             if (!level().isClientSide) {
                 setOrderedToSit(!isOrderedToSit());
                 this.jumping = false;
@@ -299,11 +304,11 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
     }
 
     public DyeColor getCollarColor() {
-        return DyeColor.byId(this.entityData.get(COLLAR_COLOR));
+        return DyeColor.byId(this.entityData.get(T_COLLAR_COLOR));
     }
 
     public void setCollarColor(DyeColor color) {
-        this.entityData.set(COLLAR_COLOR, color.getId());
+        this.entityData.set(T_COLLAR_COLOR, color.getId());
     }
 
     public boolean isAttacking() {
@@ -446,6 +451,20 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
             }
         }
         return baby;
+    }
+
+    private void tryToTame(Player player) {
+        if (!this.level().isClientSide) {
+            if (this.random.nextInt(8) == 0 && !EventHooks.onAnimalTame(this, player)) {
+                this.tame(player);
+                this.navigation.stop();
+                this.setTarget(null);
+                this.setOrderedToSit(true);
+                this.level().broadcastEntityEvent(this, (byte)7);
+            } else {
+                this.level().broadcastEntityEvent(this, (byte)6);
+            }
+        }
     }
 
     @Override
@@ -739,35 +758,16 @@ public class TigerEntity extends TamableAnimal implements NeutralMob, VariantHol
         return ModSoundEvents.TIGER_DEATH.get();
     }
 
-    @Override
-    public SoundEvent getEatingSound(ItemStack stack) {
-        return SoundEvents.CAT_EAT;
-    }
-
-    private void tryToTame(Player player) {
-        if (this.random.nextInt(8) == 0 && !EventHooks.onAnimalTame(this, player)) {
-            this.tame(player);
-            this.navigation.stop();
-            this.setTarget(null);
-            this.setOrderedToSit(true);
-            this.level().broadcastEntityEvent(this, (byte)7);
-        } else {
-            this.level().broadcastEntityEvent(this, (byte)6);
-        }
-
-    }
-
     public boolean canMate(Animal otherAnimal) {
         if (otherAnimal == this) {
             return false;
         } else if (!this.isTame()) {
             return false;
-        } else if (otherAnimal instanceof TigerEntity) {
-            TigerEntity tiger = (TigerEntity) otherAnimal;
+        } else if (otherAnimal instanceof TigerEntity tiger) {
             if (!tiger.isTame()) {
                 return false;
             } else {
-                return !tiger.isInSittingPose() && this.isInLove() && tiger.isInLove();
+                return !tiger.isInSittingPose() && !this.isInSittingPose() && this.isInLove() && tiger.isInLove();
             }
         } else {
             return false;

@@ -1,17 +1,17 @@
 package com.execcexrrvycvtvtv.ancient_horizons.datagen;
 
-import com.execcexrrvycvtvtv.ancient_horizons.registry.ModEntities;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
+import static com.execcexrrvycvtvtv.ancient_horizons.registry.ModEntities.*;
 import static com.execcexrrvycvtvtv.ancient_horizons.registry.ModTags.EntityTypes.*;
+import static net.minecraft.tags.EntityTypeTags.*;
+import static net.minecraft.world.entity.EntityType.*;
 
 public class ModEntityTagProvider extends EntityTypeTagsProvider {
     public ModEntityTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
@@ -21,25 +21,34 @@ public class ModEntityTagProvider extends EntityTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(TIGER_PREY).add(
-                EntityType.ARMADILLO,
-                EntityType.CHICKEN,
-                EntityType.HOGLIN,
-                EntityType.RABBIT,
-                EntityType.COW,
-                EntityType.SHEEP,
-                EntityType.PIG,
-                EntityType.CREEPER,
-                EntityType.LLAMA,
-                EntityType.GOAT
+                ARMADILLO,
+                CHICKEN,
+                HOGLIN,
+                RABBIT,
+                COW,
+                SHEEP,
+                PIG,
+                CREEPER,
+                LLAMA,
+                GOAT,
+                DEER.get()
         );
-        tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(
-                ModEntities.TIGER.get()
+        tag(POWDER_SNOW_WALKABLE_MOBS).add(
+                TIGER.get()
         );
-        tag(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES).add(
-                ModEntities.TIGER.get()
+        tag(FREEZE_IMMUNE_ENTITY_TYPES).add(
+                TIGER.get()
         );
         tag(FELIDAE).add(
-                ModEntities.TIGER.get()
+                TIGER.get(),
+                CAT,
+                OCELOT
+        );
+        tag(GOLDEN_EAGLE_PREY).add(
+                ARMADILLO,
+                SHEEP,
+                GOAT,
+                RABBIT
         );
     }
 }

@@ -1,10 +1,9 @@
 package com.execcexrrvycvtvtv.ancient_horizons;
 
+import com.execcexrrvycvtvtv.ancient_horizons.entity.client.deer.DeerRenderer;
+import com.execcexrrvycvtvtv.ancient_horizons.entity.client.golden_eagle.GoldenEagleRenderer;
 import com.execcexrrvycvtvtv.ancient_horizons.entity.client.tiger.TigerRenderer;
-import com.execcexrrvycvtvtv.ancient_horizons.registry.ModCreativeModeTabs;
-import com.execcexrrvycvtvtv.ancient_horizons.registry.ModEntities;
-import com.execcexrrvycvtvtv.ancient_horizons.registry.ModItems;
-import com.execcexrrvycvtvtv.ancient_horizons.registry.ModSoundEvents;
+import com.execcexrrvycvtvtv.ancient_horizons.registry.*;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -27,6 +26,7 @@ public class AncientHorizons {
         modEventBus.addListener(this::commonSetup);
         NeoForge.EVENT_BUS.register(this);
 
+        ModBlocks.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);
@@ -48,6 +48,8 @@ public class AncientHorizons {
         @SubscribeEvent
         static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.TIGER.get(), TigerRenderer::new);
+            EntityRenderers.register(ModEntities.GOLDEN_EAGLE.get(), GoldenEagleRenderer::new);
+            EntityRenderers.register(ModEntities.DEER.get(), DeerRenderer::new);
         }
     }
 }

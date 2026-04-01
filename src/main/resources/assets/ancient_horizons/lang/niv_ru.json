@@ -1,0 +1,40 @@
+{
+    "creativetab.ancient_horizons.ancient_horizons_spawn_eggs": "Мролв тлытьыр̌ху: Пандӈойӄху",
+    "creativetab.ancient_horizons.ancient_horizons_blocks_and_items": "Мролв тлытьыр̌ху: П’иныгу хара блокху",
+    "creativetab.ancient_horizons.ancient_horizons_misc": "Мролв тлытьыр̌ху: Эна",
+    "creativetab.ancient_horizons.ancient_horizons_foodstuffs": "Мролв тлытьыр̌ху: Инныдьху",
+
+    "item.ancient_horizons.tiger_spawn_egg": "Иғлуладь панӈойӄ",
+    "entity.ancient_horizons.tiger": "Иғлуладь",
+
+    "subtitles.ancient_horizons.tiger.idle": "Иғлуладь ыр̌ыдь",
+    "subtitles.ancient_horizons.tiger.hurt": "Иғлуладь муйныдь",
+    "subtitles.ancient_horizons.tiger.death": "Иғлуладь мудь",
+    "subtitles.ancient_horizons.tiger.angry": "Иғлуладь р̌ыдь",
+    "subtitles.ancient_horizons.tiger.chuffle": "Иғлуладь мур̌дь",
+    "subtitles.ancient_horizons.tiger.sleep": "Иғлуладь ӄʼодь",
+
+    "item.ancient_horizons.golden_eagle_spawn_egg": "Айсчамӈ панӈойӄ",
+    "entity.ancient_horizons.golden_eagle": "Айсчамӈ",
+
+    "subtitles.ancient_horizons.golden_eagle.idle": "Айсчамӈ ӄʼоюдь",
+    "subtitles.ancient_horizons.golden_eagle.hurt": "Айсчамӈ муйныдь",
+    "subtitles.ancient_horizons.golden_eagle.death": "Айсчамӈ мудь",
+
+    "item.ancient_horizons.deer_spawn_egg": "Чолни панӈойӄ",
+    "entity.ancient_horizons.deer": "Чолни",
+
+    "subtitles.ancient_horizons.deer.idle": "Чолни р̌ыдь",
+    "subtitles.ancient_horizons.deer.hurt": "Чолни муйныдь",
+    "subtitles.ancient_horizons.deer.death": "Чолни мудь",
+
+    "item.ancient_horizons.tiger_hair": "Иғлуладь ӈывр̌ки",
+    "item.ancient_horizons.tiger_fur": "Иғлуладь ӈығр̌",
+    "item.ancient_horizons.tiger_pelt": "Иғлуладь ӈағр̌",
+    "item.ancient_horizons.falconry_glove": "Чамӈ вамӄ",
+    "item.ancient_horizons.venison": "Талва чолнитюс",
+    "item.ancient_horizons.cooked_venison": "Р̌ала чолнитюс",
+
+    "ancient_horizons.advancements.eye_of_the_taiga.title": "Ныкр̌ ӈафӄху",
+    "ancient_horizons.advancements.eye_of_the_taiga.description": "Ныкр̌ ӄʼать-ӄʼать валгу иғлуладьху ӈафӄ мудь"
+}

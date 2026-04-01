@@ -18,6 +18,14 @@ public class ModSoundEvents {
     public static final DeferredHolder<SoundEvent, SoundEvent> TIGER_SLEEP = register("entity.tiger.sleep");
     public static final DeferredHolder<SoundEvent, SoundEvent> TIGER_CHUFFLE = register("entity.tiger.chuffle");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOLDEN_EAGLE_AMBIENT = register("entity.golden_eagle.idle");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOLDEN_EAGLE_HURT = register("entity.golden_eagle.hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOLDEN_EAGLE_DEATH = register("entity.golden_eagle.death");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> DEER_AMBIENT = register("entity.deer.idle");
+    public static final DeferredHolder<SoundEvent, SoundEvent> DEER_HURT = register("entity.deer.hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> DEER_DEATH = register("entity.deer.death");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(
                 ResourceLocation.fromNamespaceAndPath(AncientHorizons.MOD_ID, name)));

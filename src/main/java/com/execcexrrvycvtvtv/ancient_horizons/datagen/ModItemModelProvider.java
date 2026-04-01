@@ -13,9 +13,15 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        withExistingParent(ModItems.TIGER_SPAWN_EGG.getId().getPath(),mcLoc("item/template_spawn_egg"));
+        spawnEggItem(ModItems.TIGER_SPAWN_EGG.get());
+        spawnEggItem(ModItems.GOLDEN_EAGLE_SPAWN_EGG.get());
+        spawnEggItem(ModItems.DEER_SPAWN_EGG.get());
+
         basicItem(ModItems.TIGER_HAIR.get());
         basicItem(ModItems.TIGER_FUR.get());
         basicItem(ModItems.TIGER_PELT.get());
+        basicItem(ModItems.FALCONRY_GLOVE.get());
+        basicItem(ModItems.VENISON.get());
+        basicItem(ModItems.COOKED_VENISON.get());
     }
 }
